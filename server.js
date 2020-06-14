@@ -10,8 +10,21 @@ var express = require('express')
 var cors = require('cors')
 var app = express()
 
+const {API_BASE_URL} = require('./config');
+
+export const fetchUserProfile = (userid) => dispatch => {
+    fetch(`${API_BASE_URL}/users/${userId}`).then(res => {
+        if (!res.ok) {
+            return Promise.reject(res.statusText);
+        }
+        return res.json();
+    }).then(userProfile => {
+        dispatch(fetchUserProfileSuccess(userProfile));
+    }).catch(err => dispatch(fetchUserProfileError(err)));
+};
+
 var corsOptions = {
-  origin: 'http://example.com',
+  origin: 'http:localhost:8000/cookbooks',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
